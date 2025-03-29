@@ -76,25 +76,57 @@ class FormulaEvaluator {
       const fields = this._parseFields(expr);
       
       // Build the function body
-      let funcBody = 'try {';
+      let funcBody = 'try {\n';
       
       // Add each input field's value
+      const inputValues = {};
+      let hasInvalidInput = false;
+      
       fields.forEach(id => {
         const input = document.getElementById(id);
-        const val = input ? parseFloat(input.value) || 0 : 0;
-        funcBody += `const ${id} = ${val};\n`;
+        if (!input) {
+          inputValues[id] = 0;
+          return;
+        }
+        
+        // Get input value, handle empty inputs properly
+        const rawValue = input.value.trim();
+        const val = rawValue === '' ? 0 : parseFloat(rawValue);
+        
+        // Store for validation
+        inputValues[id] = isNaN(val) ? 0 : val;
+      });
+      
+      // Special validation for BMI (don't divide by zero)
+      if (expr.includes('/ (height * height)') && inputValues.height !== undefined) {
+        if (inputValues.height <= 0) {
+          el.textContent = "Invalid: Height must be > 0";
+          return;
+        }
+      }
+      
+      // Build function with all input values
+      Object.keys(inputValues).forEach(id => {
+        funcBody += `  const ${id} = ${inputValues[id]};\n`;
       });
       
       // Add the expression evaluation
-      funcBody += `return ${expr};\n`;
+      funcBody += `  return ${expr};\n`;
       funcBody += '} catch (e) { return "Invalid Formula"; }';
       
       // Create and run the evaluation function
       const func = new Function(funcBody);
       const answer = func();
       
-      // Update the formula tag
-      el.textContent = isNaN(answer) ? "Invalid Formula" : answer;
+      // Format output for readability
+      if (typeof answer === 'number') {
+        // Round to 2 decimal places if it's a float
+        const formatted = Number.isInteger(answer) ? answer : parseFloat(answer.toFixed(2));
+        el.textContent = formatted;
+      } else {
+        // Use raw value for other types or errors
+        el.textContent = answer;
+      }
     } catch (err) {
       // Just show error state if anything goes wrong
       el.textContent = "Invalid Formula";
