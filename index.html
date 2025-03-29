@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Formula Calculator</h1>
+        <p>Try changing the numbers in any input field to see results update instantly.</p>
+        
+        <div class="grid">
+            <!-- Calculator 1 -->
+            <div class="card">
+                <h3 class="card-title">Basic Math</h3>
+                <div class="input-group">
+                    <label for="num1">Number A:</label>
+                    <input type="number" id="num1" value="5">
+                </div>
+                <div class="input-group">
+                    <label for="num2">Number B:</label>
+                    <input type="number" id="num2" value="10">
+                </div>
+                <div class="formula-doc">Formula: (num1 + num2) * 2</div>
+                <formula evaluator="(num1 + num2) * 2"></formula>
+            </div>
+            
+            <!-- Rectangle area -->
+            <div class="card">
+                <h3 class="card-title">Rectangle Area</h3>
+                <div class="input-group">
+                    <label for="length">Length:</label>
+                    <input type="number" id="length" value="3">
+                </div>
+                <div class="input-group">
+                    <label for="width">Width:</label>
+                    <input type="number" id="width" value="4">
+                </div>
+                <div class="formula-doc">length * width</div>
+                <formula evaluator="length * width"></formula>
+            </div>
+            
+            <!-- BMI Calc -->
+            <div class="card">
+                <h3 class="card-title">BMI Calc</h3>
+                <div class="input-group">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" value="70">
+                </div>
+                <div class="input-group">
+                    <label for="height">Height (m):</label>
+                    <input type="number" id="height" value="1.75" step="0.01">
+                </div>
+                <div class="formula-doc">weight / (height * height)</div>
+                <formula evaluator="weight / (height * height)"></formula>
+            </div>
+            
+            <!-- Trig -->
+            <div class="card">
+                <h3 class="card-title">Trig Functions</h3>
+                <div class="input-group">
+                    <label for="angle">Angle (degrees):</label>
+                    <input type="number" id="angle" value="45">
+                </div>
+                <div class="formula-doc">Math.sin(angle * Math.PI / 180).toFixed(4)</div>
+                <formula evaluator="Math.sin(angle * Math.PI / 180).toFixed(4)"></formula>
+            </div>
+            
+            <!-- Currency calculator -->
+            <div class="card">
+                <h3 class="card-title">Currency Exchange</h3>
+                <div class="input-group">
+                    <label for="usd">USD:</label>
+                    <input type="number" id="usd" value="100">
+                </div>
+                <div class="input-group">
+                    <label for="rate">Rate (EUR/USD):</label>
+                    <input type="number" id="rate" value="0.85" step="0.01">
+                </div>
+                <div class="formula-doc">usd * rate</div>
+                <formula evaluator="usd * rate"></formula>
+            </div>
+            
+            <!-- Temp converter -->
+            <div class="card">
+                <h3 class="card-title">°C to °F</h3>
+                <div class="input-group">
+                    <label for="celsius">Celsius:</label>
+                    <input type="number" id="celsius" value="25">
+                </div>
+                <div class="formula-doc">(celsius * 9/5) + 32</div>
+                <formula evaluator="(celsius * 9/5) + 32"></formula>
+            </div>
+        </div>
+    </div>
+    
+    <script src="formula.js"></script>
+</body>
+</html> 
